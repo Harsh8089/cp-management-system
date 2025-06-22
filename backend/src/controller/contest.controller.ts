@@ -68,7 +68,7 @@ export const updateContestInfo = async (req: Request, res: Response) => {
 
     const contestInfo = response.data.result as ContestApi[];
     const contestsData = contestInfo.map((c) => ({
-      contestId: String(c.contestId),
+      id: c.contestId,
       name: c.contestName,
       rank: c.rank,
       oldRating: c.oldRating,
