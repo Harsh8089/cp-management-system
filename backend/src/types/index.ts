@@ -49,3 +49,5 @@ export type ProblemDetails = {
   bucketWiseData: BucketWiseData;
   heatMapData: HeatMapData
 }
+
+export type Codeforces_API = 'USER_INFO' | 'CONTEST_INFO' | 'PROBLEM_INFO'; 
