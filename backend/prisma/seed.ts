@@ -14,12 +14,19 @@ const contests = [
   { contestId: "2044", name: "Codeforces Round 993 (Div. 4)", rank: 4469, oldRating: 1162, newRating: 1249, date: new Date(1734281400 * 1000), },
 ];
 
+const problems = [
+  { name: "Divine Tree", tags: ["constructive algorithms", "greedy", "math", "sortings", "trees"], submittedAt: new Date(1750521205 * 1000) }
+];
+
 async function clearDb() {
   try {
     console.log('🧹 Clearing database...')
     
     await prisma.contestResult.deleteMany({})
     console.log('✅ Cleared contest results')
+
+    await prisma.problem.deleteMany({});
+    console.log('✅ Cleared problem results')
     
     await prisma.user.deleteMany({})
     console.log('✅ Cleared users')
@@ -83,8 +90,39 @@ async function seedContest() {
   }
 }
 
+async function seedProblem() {
+  try {
+    for( const u of users) {
+      const user = await prisma.user.findFirst({
+        where: { username: 'harshj_25' },
+        select: { id: true }
+      });
+
+      if (!user?.id) {
+        console.error(`❌ User ID not found for username: ${u.username}`);
+        continue;
+      }
+
+      for (const p of problems) {
+        await prisma.problem.create({
+          data: {
+            userId: user?.id,
+            name: p.name,
+            tags: p.tags,
+            submittedAt: p.submittedAt,
+          }
+        });
+      }
+    }
+    console.log("✅ Problem seeded.");
+  } catch (error) {
+    console.error('❌ Error seeding problems:', error);
+  }
+}
+
 clearDb()
-.then(() => seedUsers())
-.then(() => seedContest())
-.catch(error => console.error("❌ Something went wrong while seeding: ", error))
+// .then(() => seedUsers())
+// .then(() => seedContest())
+// .then(() => seedProblem())
+// .catch(error => console.error("❌ Something went wrong while seeding: ", error))
 .finally(() => prisma.$disconnect());
