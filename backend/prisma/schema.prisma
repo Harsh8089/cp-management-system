@@ -9,10 +9,14 @@ datasource db {
 }
 
 model User {
-  id        String          @id @default(uuid())
-  username  String          @unique
+  id        String          @id
+  name      String
   email     String?         @unique
-  createdAt DateTime        @default(now())
+  rating    Int?
+  rank      String?
+  maxRating Int?
+  maxRank   String?
+  createdAt DateTime
   contests  ContestResult[]
   problems  Problem[]
 }

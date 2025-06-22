@@ -3,7 +3,7 @@ import { PrismaClient } from "../src/generated/prisma";
 const prisma = new PrismaClient();
 
 const users = [
-  { username: "harshj_25" }
+  { id: "harshj_25", name: "Harsh Jain", rating: 1249, rank: "pupil", maxRating: 1249, maxRank: "pupil", createdAt: new Date(1710670552 * 1000) }
 ];
 
 const contests = [
@@ -41,7 +41,7 @@ async function seedUsers() {
   try {
     for (const u of users) {
       await prisma.user.upsert({
-        where: { username: u.username },
+        where: { id: u.id },
         update: {},
         create: u
       });
@@ -57,7 +57,13 @@ async function seedContest() {
     for (const u of users) {
       const user = await prisma.user.findFirst({
         where: {
-          username: u.username
+          id: u.id,
+          name: u.name,
+          rating: u.rating,
+          rank: u.rank,
+          maxRating: u.maxRating,
+          maxRank: u.maxRank,
+          createdAt: u.createdAt
         },
         select: {
           id: true
@@ -65,7 +71,7 @@ async function seedContest() {
       });
 
       if (!user?.id) {
-        console.error(`❌ User ID not found for username: ${u.username}`);
+        console.error(`❌ User ID not found for username: ${u.id}`);
         continue;
       }
 
@@ -94,12 +100,12 @@ async function seedProblem() {
   try {
     for( const u of users) {
       const user = await prisma.user.findFirst({
-        where: { username: 'harshj_25' },
+        where: { id: 'harshj_25' },
         select: { id: true }
       });
 
       if (!user?.id) {
-        console.error(`❌ User ID not found for username: ${u.username}`);
+        console.error(`❌ User ID not found for username: ${u.id}`);
         continue;
       }
 
@@ -121,8 +127,8 @@ async function seedProblem() {
 }
 
 clearDb()
-// .then(() => seedUsers())
-// .then(() => seedContest())
-// .then(() => seedProblem())
-// .catch(error => console.error("❌ Something went wrong while seeding: ", error))
+.then(() => seedUsers())
+.then(() => seedContest())
+.then(() => seedProblem())
+.catch(error => console.error("❌ Something went wrong while seeding: ", error))
 .finally(() => prisma.$disconnect());
