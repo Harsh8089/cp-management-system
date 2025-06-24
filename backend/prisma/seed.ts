@@ -15,8 +15,8 @@ const contests = [
 ];
 
 const problems = [
-  { id: 272117316, name: "Bouquet (Easy Version)", tags: ["constructive algorithms", "greedy", "math", "sortings", "trees"], submittedAt: new Date(1721747662 * 1000), contestId: 1995 },
-  { id: 273368124, name: "Decode", tags: ["combinatorics", "data structures", "implementation", "math"] , submittedAt: new Date(1722269965 * 1000), contestId: 1996 }
+  { id: 272117316, name: "Bouquet (Easy Version)", tags: ["constructive algorithms", "greedy", "math", "sortings", "trees"], submittedAt: [new Date(1721747662 * 1000)], contestId: 1995 },
+  { id: 273368124, name: "Decode", tags: ["combinatorics", "data structures", "implementation", "math"] , submittedAt: [new Date(1722269965 * 1000)], contestId: 1996 }
 ];
 
 async function clearDb() {

@@ -22,28 +22,26 @@ model User {
 }
 
 model ContestResult {
-  id               Int       @id
+  id               Int      @id
   name             String
   rank             Int
   oldRating        Int
   newRating        Int
   unsolvedProblems Int?
   date             DateTime
-  problems         Problem[]
   userId           String
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model Problem {
-  id          Int      @id
+  id          Int        @id
   name        String
   rating      Int?
   tags        String[]
-  submittedAt DateTime
+  submittedAt DateTime[]
   userId      String
   contestId   Int?
 
-  user    User           @relation(fields: [userId], references: [id], onDelete: Cascade)
-  contest ContestResult? @relation(fields: [contestId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
